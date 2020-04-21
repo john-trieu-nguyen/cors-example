@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>CORS without x-v specified in the header</h1>
+<button onclick="corsNonXV()">CORS without x-v specified</button>
+
+<br>
+<br>
+<br>
+
+
+
+<h1>CORS with x-v header</h1>
+<button onclick="corsXV()">CORS with x-v</button>
+
+<br>
+<br>
+<br>
+
+
+<h2>Open developer console to see output</h2>
+
+
+<script>
+
+var anzProductlist
+
+async function corsNonXV() {
+    const response = await fetch('https://api.anz/cds-au/v1/banking/products?page-size=1000&effective=ALL', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+        	// No headers specified
+        }
+    })
+    anzProductlist = await response.json()
+
+    if (response.ok) {
+
+        console.log(anzProductlist)
+        return anzProductlist;
+
+    } else {
+        console.log(anzProductlist)
+        throw new Error(anzProductlist)
+    }
+
+}
+
+
+async function corsXV() {
+    const response = await fetch('https://api.anz/cds-au/v1/banking/products?page-size=1000&effective=ALL', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            // x-v header specified
+            'x-v': '1',
+        }
+    })
+    anzProductlist = await response.json()
+
+    if (response.ok) {
+
+        console.log(anzProductlist)
+        return anzProductlist;
+
+    } else {
+        console.log(anzProductlist)
+        throw new Error(anzProductlist)
+    }
+
+}
+
+
+</script>
+
+</body>
+</html>
